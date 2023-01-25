@@ -3,7 +3,7 @@ import NavBar from "./NavBar";
 import { Route, Routes } from "react-router-dom";
 import Home from "../Pages/Home";
 import Checkout from "../Pages/Checkout";
-
+// import Checkout from "../Pages/Checkout";
 const Navigation = () => {
   return (
     <>
