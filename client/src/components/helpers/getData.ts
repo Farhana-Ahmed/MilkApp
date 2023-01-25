@@ -1,9 +1,9 @@
-import db from "../db/milk.json";
 
-
-export const getData = () => {
-  const data = db;
-  return data;
+export const getData = async () => {
+  const data = await fetch('http://localhost:3001/api/milk')
+ 
+ const results = await  data.json()
+  return results;
 };
 
 
