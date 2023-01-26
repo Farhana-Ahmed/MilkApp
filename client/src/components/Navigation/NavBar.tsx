@@ -1,22 +1,10 @@
 import React from "react";
-import {
-  Button,
-  Container,
-  Form,
-  Nav,
-  Navbar,
-  NavDropdown,
-} from "react-bootstrap";
+import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
-import { ProductItem } from "../types/IProduct";
-interface Props {
-  
-  handleSearch : (e:React.MouseEvent) => void;
-}
 
-const NavBar = ({ handleSearch}: Props) => {
+const NavBar = () => {
   return (
     <Container>
       <Navbar bg="light" expand="lg">
@@ -43,16 +31,7 @@ const NavBar = ({ handleSearch}: Props) => {
               </NavDropdown.Item>
             </NavDropdown>
           </Nav>
-          <Form className="d-flex">
-            <Form.Control
-              type="search"
-              placeholder="Search"
-              className="me-2"
-              aria-label="Search"
-            />
-            <Button variant="outline-success" onClick={handleSearch}>Search</Button>
-            <FontAwesomeIcon icon={faShoppingCart} color="black" size="2x" />
-          </Form>
+          <FontAwesomeIcon icon={faShoppingCart} color="black" size="2x" />
         </Navbar.Collapse>
       </Navbar>
     </Container>

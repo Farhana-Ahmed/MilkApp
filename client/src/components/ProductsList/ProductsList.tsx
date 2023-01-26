@@ -5,10 +5,13 @@ import useFetch from "../hooks/useFetch";
 import Pagination from "react-bootstrap/Pagination";
 
 import Product from "../Product/Product";
+import { Button } from "react-bootstrap";
+import { Form } from "react-router-dom";
 
 const ProductsList = () => {
   const { products } = useFetch();
-
+  //search component
+ 
   const [active, setActive] = useState(1);
 
   let pages = [];
@@ -41,8 +44,9 @@ const ProductsList = () => {
   const handleAdd = () => {};
   return (
     <div className="cards-container">
+      
       {afterslice.map((product) => (
-        <Product key={product.id} product={product} handleAdd={handleAdd} />
+        <Product key={product.id} product={product} />
       ))}
 
       <div className="container d-flex justify-content-center">
