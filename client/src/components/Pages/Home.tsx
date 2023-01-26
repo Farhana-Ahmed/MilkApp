@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { Container, Pagination } from "react-bootstrap";
-import useFetch, { useMultiselect } from "../hooks/useFetch";
-import Select from "react-select";
+import useFetch from "../hooks/useFetch";
 import Product from "../Product/Product";
-import ProductsList from "../ProductsList/ProductsList";
 import "../ProductsList/styles.css";
 const Home = () => {
   const { products } = useFetch();
@@ -11,7 +9,7 @@ const Home = () => {
 
   // const types = [new Set(products.map((product) => product.type))]
   // console.log('without duplicates', types.join(' '))
-  const types = [
+  let types: string[] = [
     "Cashew milk",
     "Whole milk",
     "Pea milk",
@@ -54,7 +52,7 @@ const Home = () => {
   };
 
 
-  //pagination logic
+  //pagination logic 
 
   let pages = [];
   const noOfCardsPerPage = 9;
@@ -116,7 +114,7 @@ const Home = () => {
           })
         )}
         {isFilter &&
-          filteredProducts()?.map((product) => <Product product={product} />)}
+          filteredProducts()?.map((product, index) => <Product product={product} key={index} />)}
       </Container>
 
       <div className="container d-flex justify-content-center">

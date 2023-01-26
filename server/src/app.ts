@@ -28,4 +28,8 @@ app.get('/api/milk', (_req: Request, res: Response) => {
     return res.status(200).send(milkAvailable);
 })
 
+app.get('/api/milk/:id', (_req: Request, res: Response) => {
+    return res.status(200).send(milkAvailable.filter((milk) => milk.id == (_req.params.id)));
+})
+
 export default app;

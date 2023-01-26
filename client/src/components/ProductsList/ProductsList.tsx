@@ -9,32 +9,32 @@ import Product from "../Product/Product";
 
 const ProductsList = () => {
   const { products } = useFetch();
-  const [active, setActive] = useState(1);  
-  let pages = [];
-  const noOfCardsPerPage = 9;
-  let indexOfLastProd = active * noOfCardsPerPage;
-  let indexOfFirstProd = indexOfLastProd - noOfCardsPerPage;
+  // const [active, setActive] = useState(1);  
+  // let pages = [];
+  // const noOfCardsPerPage = 9;
+  // let indexOfLastProd = active * noOfCardsPerPage;
+  // let indexOfFirstProd = indexOfLastProd - noOfCardsPerPage;
 
   
 
-  const afterslice = products.slice(indexOfFirstProd, indexOfLastProd);
+  // const afterslice = products.slice(indexOfFirstProd, indexOfLastProd);
 
-  for (let number = 1; number <= products.length/9; number++) {
-    pages.push(
-      <Pagination.Item
-        key={number}
-        active={number === active}
-        onClick={() => pagination(number)}
-      >
-        {number}
-      </Pagination.Item>
-    );
-  }
-  function pagination(number: number) {
-    indexOfLastProd = number * noOfCardsPerPage;
-    indexOfFirstProd = indexOfLastProd - noOfCardsPerPage;
-    setActive(number);
-  }
+  // for (let number = 1; number <= products.length/9; number++) {
+  //   pages.push(
+  //     <Pagination.Item
+  //       key={number}
+  //       active={number === active}
+  //       onClick={() => pagination(number)}
+  //     >
+  //       {number}
+  //     </Pagination.Item>
+  //   );
+  // }
+  // function pagination(number: number) {
+  //   indexOfLastProd = number * noOfCardsPerPage;
+  //   indexOfFirstProd = indexOfLastProd - noOfCardsPerPage;
+  //   setActive(number);
+  // }
   
   return (
     <div className="cards-container">
@@ -43,7 +43,7 @@ const ProductsList = () => {
         <Product key={product.id} product={product} />
       ))}
 
-      <div className="container d-flex justify-content-center">
+      {/* <div className="container d-flex justify-content-center">
         <Pagination size="sm">
           <Pagination.Prev
             onClick={() => {
@@ -61,7 +61,7 @@ const ProductsList = () => {
             }}
           />
         </Pagination>
-      </div>
+      </div> */}
     </div>
   );
 };
