@@ -37,7 +37,7 @@ export const useMultiselect = (initialValue: string[]) => {
     // } else {
     //   setSelected([...selected, ...[value]]);
     // }
-    setSelected(selected)
+    setSelected(value)
   };
 
   // const isSelected = (value: string) => {

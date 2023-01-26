@@ -7,25 +7,22 @@ import Pagination from "react-bootstrap/Pagination";
 import Product from "../Product/Product";
 import { Button } from "react-bootstrap";
 import { Form } from "react-router-dom";
+import { ProductItem } from "../types/IProduct";
 
 const ProductsList = () => {
   const { products } = useFetch();
-  //search component
- 
-  const [active, setActive] = useState(1);
-
+  const [active, setActive] = useState(1);  
   let pages = [];
+  let productsList : ProductItem[] = []
   const noOfCardsPerPage = 9;
-  const totalProducts = [];
-  for (let number = 1; number <= products.length; number++) {
-    totalProducts.push(number);
-  }
-
   let indexOfLastProd = active * noOfCardsPerPage;
   let indexOfFirstProd = indexOfLastProd - noOfCardsPerPage;
+
+  
+
   const afterslice = products.slice(indexOfFirstProd, indexOfLastProd);
 
-  for (let number = 1; number <= 11; number++) {
+  for (let number = 1; number <= products.length/9; number++) {
     pages.push(
       <Pagination.Item
         key={number}
@@ -41,7 +38,7 @@ const ProductsList = () => {
     indexOfFirstProd = indexOfLastProd - noOfCardsPerPage;
     setActive(number);
   }
-  const handleAdd = () => {};
+  
   return (
     <div className="cards-container">
       
