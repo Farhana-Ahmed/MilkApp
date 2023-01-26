@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container } from "react-bootstrap";
+import { Container, Pagination } from "react-bootstrap";
 import useFetch, { useMultiselect } from "../hooks/useFetch";
 import Select from "react-select";
 import Product from "../Product/Product";
@@ -7,6 +7,8 @@ import ProductsList from "../ProductsList/ProductsList";
 import "../ProductsList/styles.css";
 const Home = () => {
   const { products } = useFetch();
+  const [active, setActive] = useState(1);  
+
   // const types = [new Set(products.map((product) => product.type))]
   // console.log('without duplicates', types.join(' '))
   const types = [
@@ -50,6 +52,35 @@ const Home = () => {
   const handleSearch = (e: React.FormEvent) => {
     setClick(true);
   };
+
+
+  //pagination logic
+
+  let pages = [];
+  const noOfCardsPerPage = 9;
+  let indexOfLastProd = active * noOfCardsPerPage;
+  let indexOfFirstProd = indexOfLastProd - noOfCardsPerPage;
+
+  
+
+  const afterslice = products.slice(indexOfFirstProd, indexOfLastProd);
+
+  for (let number = 1; number <= products.length/9; number++) {
+    pages.push(
+      <Pagination.Item
+        key={number}
+        active={number === active}
+        onClick={() => pagination(number)}
+      >
+        {number}
+      </Pagination.Item>
+    );
+  }
+  function pagination(number: number) {
+    indexOfLastProd = number * noOfCardsPerPage;
+    indexOfFirstProd = indexOfLastProd - noOfCardsPerPage;
+    setActive(number);
+  }
   return (
     <>
       <input
@@ -61,7 +92,7 @@ const Home = () => {
       />
       <button onClick={handleSearch}>Search</button>
       <select value="all" onChange={handleFilter}>
-        <option>select</option>
+        <option>Filter</option>
         {types.map((item, index) => {
           return (
             <option key={`key${index}`} value={`${item}`}>
@@ -70,20 +101,43 @@ const Home = () => {
           );
         })}
       </select>
-         <ProductsList />
-
+        <h5>{products.length } products</h5>
+       
       <Container className="mt-3 home">
-         {/* <ProductsList /> */}
+      {!click && !isFilter && afterslice.map((product) => (
+        <Product key={product.id} product={product} />
+      ))}
         {click && (
           products.map((product, index) => {
             if (product.name.toLowerCase().includes(search.toLowerCase())) {
               return <Product key={index} product={product} />;
             }
+            return null;
           })
         )}
         {isFilter &&
           filteredProducts()?.map((product) => <Product product={product} />)}
       </Container>
+
+      <div className="container d-flex justify-content-center">
+        <Pagination size="sm">
+          <Pagination.Prev
+            onClick={() => {
+              if (active > 1) {
+                pagination(active - 1);
+              }
+            }}
+          />
+          {pages}
+          <Pagination.Next
+            onClick={() => {
+              if (active < 5) {
+                pagination(active + 1);
+              }
+            }}
+          />
+        </Pagination>
+      </div>
     </>
   );
 };

@@ -1,19 +1,16 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 import useFetch from "../hooks/useFetch";
 
 import Pagination from "react-bootstrap/Pagination";
 
 import Product from "../Product/Product";
-import { Button } from "react-bootstrap";
-import { Form } from "react-router-dom";
-import { ProductItem } from "../types/IProduct";
+
 
 const ProductsList = () => {
   const { products } = useFetch();
   const [active, setActive] = useState(1);  
   let pages = [];
-  let productsList : ProductItem[] = []
   const noOfCardsPerPage = 9;
   let indexOfLastProd = active * noOfCardsPerPage;
   let indexOfFirstProd = indexOfLastProd - noOfCardsPerPage;
@@ -42,7 +39,7 @@ const ProductsList = () => {
   return (
     <div className="cards-container">
       
-      {afterslice.map((product) => (
+      {products.map((product) => (
         <Product key={product.id} product={product} />
       ))}
 
