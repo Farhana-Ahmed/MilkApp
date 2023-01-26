@@ -1,35 +1,30 @@
 import express from "express";
 import createHttpError from "http-errors";
+import mongoose from "mongoose";
 import cors from 'cors';
-
-import { Request, Response, Application } from "express";
-import db from '../src/db/milk.json'
+import { milkAppRouter } from "./routes/router";
+import { Application } from "express";
 const app: Application = express();
 
 app.use(express.json());
-// app.use(express.urlencoded({ extended: true }));
-// app.use(cors);
+
 const PORT = 3001;
 
-const milkAvailable = db.results;
-
+app.use(milkAppRouter)
 app.use(cors({
     origin: 'http://127.0.0.1:3000',
 }))
+mongoose.connect('mongodb://localhost:27017/example', {
+    // useUnifiedTopology: true
+}, () => {
+    console.log('connected to database')
+})
 app.listen(PORT, () => {
     console.log(`app started on port ${PORT}` )
 })
 
-app.get('/' , (_req: Request, res: Response) => {
-    return res.status(200).send({ message: "example endpoint" });
-})
 
-app.get('/api/milk', (_req: Request, res: Response) => {
-    return res.status(200).send(milkAvailable);
-})
 
-app.get('/api/milk/:id', (_req: Request, res: Response) => {
-    return res.status(200).send(milkAvailable.filter((milk) => milk.id == (_req.params.id)));
-})
+
 
 export default app;
