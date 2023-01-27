@@ -3,13 +3,18 @@ import { Container, Pagination } from "react-bootstrap";
 import useFetch from "../hooks/useFetch";
 import Product from "../Product/Product";
 import "../ProductsList/styles.css";
+import "../Pages/Home.css"
+import { MultiSelect } from "react-multi-select-component";
+import { Options } from "react-select";
 const Home = () => {
   const { products } = useFetch();
   const [active, setActive] = useState(1);  
 
   // const types = [new Set(products.map((product) => product.type))]
+
+
   // console.log('without duplicates', types.join(' '))
-  let types: string[] = [
+  const types= [
     "Cashew milk",
     "Whole milk",
     "Pea milk",
@@ -23,11 +28,16 @@ const Home = () => {
     "Macadamia milk",
   ];
 
+  const selectOptions = types.map(item => ({ label: item, value: item }));
+
+
   const [search, setSearch]: [string, (search: string) => void] =
     React.useState("");
   const [click, setClick] = useState<boolean>();
   const [filter, setFilter] = useState<string>("all");
   const [isFilter, setIsFilter] = useState<boolean>(false);
+  const [selectedCategories, setCategories] = useState(selectOptions);
+
   const filteredProducts = () => {
     let filteredProducts;
     if (filter !== "all") {
@@ -42,13 +52,14 @@ const Home = () => {
   const handleFilter = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setFilter(e.target.value);
     setIsFilter(true);
-    console.log("value of boolean filter ", isFilter, filter);
+    
   };
   const handleChange = (e: { target: { value: string } }) => {
     setSearch(e.target.value);
   };
   const handleSearch = (e: React.FormEvent) => {
     setClick(true);
+    // setSearch('')
   };
 
 
@@ -81,6 +92,7 @@ const Home = () => {
   }
   return (
     <>
+    <div className="form-container">
       <input
         onChange={handleChange}
         type="text"
@@ -99,6 +111,25 @@ const Home = () => {
           );
         })}
       </select>
+      </div>
+        {/* <div className="milk-types"> */}
+
+        {/* {types.map((type, index) => {
+          return (
+            <label key={index} className='milkType'>
+            <input type="checkbox" name="milkType" value={type}  onChange= {handleFilter} />
+            <span>{type}</span>
+        </label>
+          );
+        })} */}
+         {/* <MultiSelect
+        options={selectOptions}
+        value={selectedCategories}
+        onChange={setCategories}
+        labelledBy="Select"
+      /> */}
+        {/* </div> */}
+    
         <h5>{products.length } products</h5>
        
       <Container className="mt-3 home">

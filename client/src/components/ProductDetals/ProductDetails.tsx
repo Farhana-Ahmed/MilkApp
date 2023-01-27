@@ -59,12 +59,18 @@ setIsSubmit(true)
         <Form.Control type="number" placeholder="Enter quantity" 
                onChange={handleChange}
                value={quantity}
-               style={{margin:'5px'}}
+              
                />
     <Button variant="primary" disabled={submitDisabled} onClick= {handleClick} >Order</Button>
 
       </Card.Body>
+      <Link to ='/'>
+    <button  >Back</button>
+    </Link>
     </Card>
+
+   
+
     {isSubmit ? <Alert variant="success">{quantity} Liters Ordered successfully</Alert> : null}        
 
     {/* <div
@@ -88,6 +94,7 @@ setIsSubmit(true)
     </div> */}
       
   </div>;
+  
 };
 
 export default ProductDetails;

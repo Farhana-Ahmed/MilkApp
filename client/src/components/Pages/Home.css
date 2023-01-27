@@ -1,0 +1,17 @@
+.form-container {
+    display: flex;
+    flex-wrap: wrap;
+   align-items: center;
+   
+}
+
+.milkType {
+    display: flex;
+    justify-content: flex-start;
+    justify-content: flex-start;
+  
+  }
+  
+  .milkType {
+    margin-left: 2px;
+  }
