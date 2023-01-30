@@ -22,6 +22,5 @@ export const updateProducts = async (product:IProduct): Promise<void> => {
   products[index]['name'] = product['name'];
   products[index]['type'] = product['type'];
   products[index]['storage'] = product['storage'] || 0;
-
  }
 }

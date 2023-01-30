@@ -3,18 +3,12 @@ import { Container, Pagination } from "react-bootstrap";
 import useFetch from "../hooks/useFetch";
 import Product from "../Product/Product";
 import "../ProductsList/styles.css";
-import "../Pages/Home.css"
-import { MultiSelect } from "react-multi-select-component";
-import { Options } from "react-select";
+import "../Pages/Home.css";
+
 const Home = () => {
   const { products } = useFetch();
-  const [active, setActive] = useState(1);  
-
-  // const types = [new Set(products.map((product) => product.type))]
-
-
-  // console.log('without duplicates', types.join(' '))
-  const types= [
+  const [active, setActive] = useState(1);
+  const types = [
     "Cashew milk",
     "Whole milk",
     "Pea milk",
@@ -28,8 +22,7 @@ const Home = () => {
     "Macadamia milk",
   ];
 
-  const selectOptions = types.map(item => ({ label: item, value: item }));
-
+  const selectOptions = types.map((item) => ({ label: item, value: item }));
 
   const [search, setSearch]: [string, (search: string) => void] =
     React.useState("");
@@ -42,39 +35,29 @@ const Home = () => {
     let filteredProducts;
     if (filter !== "all") {
       filteredProducts = products.filter((product) => product.type === filter);
-      // productsList = filteredProducts.slice(indexOfFirstProd, indexOfLastProd)
     }
     return filteredProducts;
   };
 
-  console.log("these are filtered", filteredProducts()); //call
-
   const handleFilter = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setFilter(e.target.value);
     setIsFilter(true);
-    
   };
   const handleChange = (e: { target: { value: string } }) => {
     setSearch(e.target.value);
   };
   const handleSearch = (e: React.FormEvent) => {
     setClick(true);
-    // setSearch('')
   };
-
-
-  //pagination logic 
 
   let pages = [];
   const noOfCardsPerPage = 9;
   let indexOfLastProd = active * noOfCardsPerPage;
   let indexOfFirstProd = indexOfLastProd - noOfCardsPerPage;
 
-  
-
   const afterslice = products.slice(indexOfFirstProd, indexOfLastProd);
 
-  for (let number = 1; number <= products.length/9; number++) {
+  for (let number = 1; number <= products.length / 9; number++) {
     pages.push(
       <Pagination.Item
         key={number}
@@ -92,60 +75,46 @@ const Home = () => {
   }
   return (
     <>
-    <div className="form-container">
-      <input
-        onChange={handleChange}
-        type="text"
-        placeholder="Search"
-        className="me-2"
-        aria-label="Search"
-      />
-      <button onClick={handleSearch}>Search</button>
-      <select value="all" onChange={handleFilter}>
-        <option>Filter</option>
-        {types.map((item, index) => {
-          return (
-            <option key={`key${index}`} value={`${item}`}>
-              {item}
-            </option>
-          );
-        })}
-      </select>
+      <div className="form-container">
+        <input
+          onChange={handleChange}
+          type="text"
+          placeholder="Search"
+          className="me-2"
+          aria-label="Search"
+        />
+        <button onClick={handleSearch}>Search</button>
+        <select value="all" onChange={handleFilter}>
+          <option>Filter</option>
+          {types.map((item, index) => {
+            return (
+              <option key={`key${index}`} value={`${item}`}>
+                {item}
+              </option>
+            );
+          })}
+        </select>
       </div>
-        {/* <div className="milk-types"> */}
 
-        {/* {types.map((type, index) => {
-          return (
-            <label key={index} className='milkType'>
-            <input type="checkbox" name="milkType" value={type}  onChange= {handleFilter} />
-            <span>{type}</span>
-        </label>
-          );
-        })} */}
-         {/* <MultiSelect
-        options={selectOptions}
-        value={selectedCategories}
-        onChange={setCategories}
-        labelledBy="Select"
-      /> */}
-        {/* </div> */}
-    
-        <h5>{products.length } products</h5>
-       
+      <h5>{products.length} products</h5>
+
       <Container className="mt-3 home">
-      {!click && !isFilter && afterslice.map((product) => (
-        <Product key={product.id} product={product} />
-      ))}
-        {click && (
+        {!click &&
+          !isFilter &&
+          afterslice.map((product) => (
+            <Product key={product.id} product={product} />
+          ))}
+        {click &&
           products.map((product, index) => {
             if (product.name.toLowerCase().includes(search.toLowerCase())) {
               return <Product key={index} product={product} />;
             }
             return null;
-          })
-        )}
+          })}
         {isFilter &&
-          filteredProducts()?.map((product, index) => <Product product={product} key={index} />)}
+          filteredProducts()?.map((product, index) => (
+            <Product product={product} key={index} />
+          ))}
       </Container>
 
       <div className="container d-flex justify-content-center">
